@@ -41,7 +41,7 @@
          
             <div class="content w-50 ml-3">
             
-                <h2 class="text-center">Tuttigram</h2>
+                <h1 class="text-center">Tuttigram</h1>
                
                 <div class="login-box">
                     <input type="text" class="form-control col-10 mt-5" id="idInput" placeholder="아이디">
@@ -122,17 +122,3 @@
 
 
 </html> 
-
-
-
-
-<%-- 
-		<section>
-		left
-		</section>
-		
-		<section2>
-		right
-		</section2>
---%>
-		

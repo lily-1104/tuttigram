@@ -20,14 +20,14 @@
 </head>
 <body>
 
-	<div id="wrap bg-success">
+	<div id="wrap">
 	
 		<c:import url="/WEB-INF/jsp/include/header.jsp" />
 	
 	
-		<section class="content bg-success d-flex justify-content-center">
+		<section class="content d-flex justify-content-center">
 			
-			<div class="join-box bg-warning w-50 ">
+			<div class="join w-25">
 				
 				<h2 class="text-center mt-5">Tuttigram</h2>
 				
@@ -37,22 +37,34 @@
 				</div>
 				
 				
-				<div class="join-box w-50">
+				<div class="join-box">
 				
 					<div class="d-flex mt-4">
-						<input type="text col-7" class="form-control" id="idInput" placeholder="아이디">
+						<input type="text" class="form-control col-8" id="idInput" placeholder="아이디">
 						<button type="button" class="btn btn-primary ml-2">중복확인</button>
 					</div>
 					
-					<input type="password col-10" class="form-control mt-3" id="passwordInput" placeholder="비밀번호">
-					<input type="confirmPassword col-10" class="form-control mt-3" id="passwordConfirmInput" placeholder="비밀번호 확인">
+					<input type="password" class="form-control mt-3" id="passwordInput" placeholder="비밀번호">
+					<input type="Password" class="form-control mt-3" id="passwordConfirmInput" placeholder="비밀번호 확인">
 					
-					<input type="name col-10" class="form-control mt-3" id="nameInput" placeholder="이름">
-					<input type="email col-10" class="form-control mt-3" id="emailInput" placeholder="이메일">
+					<input type="name" class="form-control mt-3" id="nameInput" placeholder="이름">
+					<input type="email" class="form-control mt-3" id="emailInput" placeholder="이메일">
 					
-					<button type="button" id="joinBtn" class="btn btn-primary btn-block mt-4">회원가입</button>
+					<button type="button" id="signUpBtn" class="btn btn-primary btn-block mt-4">회원가입</button>
 				
 				</div>
+				
+				<div class="mt-2 d-none">
+					<div class="input-group form-inline">
+						<label class="input-label">아이디</label>
+						<input type="text" class="form-control text-input" id="idInput">
+					</div>
+				
+				
+				
+				
+				</div>
+				
 				
 				<div class="mt-5">
 					<text class="text-center">계정이 있으신가요?</text>
@@ -66,75 +78,113 @@
 	
 		<c:import url="/WEB-INF/jsp/include/footer.jsp" />
 		
+	</div>
 		
-		<script>
+	<script>
 		
-			$(document).ready(function() {
+		$(document).ready(function() {
+			
+			$("#isDuplicateBtn").on("click", funnction() {
 				
-				$("#joinBtn").on("click", function(e) {
-					
-					let id = $("#idInput").val();
-					let password = $("#passwordInput").val();
-					let passwordConfirm = $("#passwordConfirmInput").val();
-					let name = $("#nameInput").val();
-					let email = $("#emailInput").val();
-					
-					if (id == "") {
-						alert("아이디를 입력하세요");
-						return;
-					}
-					
-					if (password == "") {
-						alert("비밀번호를 입력하세요");
-						return;
-					}
-					
-					if (password != passwordConfirm) {
-						alert("비밀번호가 일치하지 않습니다");
-						return;
-					}
-					
-					if (name == "") {
-						alert("이름을 입력하세요");
-						return;
-					}
-					
-					if (email == "") {
-						alert("이메일을 입력하세요");
-						return;
-					}
-					
-					
-					
-					$.ajax({
-						type:"post",
-						url:"/user/signup",
-						data:{"loginId":id, "password":password, "name":name, "email":email},
-						
-						success:function(data) {
+				var loginId = $("#loginIdInput").val();
+				
+				if(loginId == "") {
+					alert("아이디를 입력하세요");
+					return;
+				}
+				
+				
+				$.ajax({
+					type:"get",
+					url:"user/duplicate_id",
+					data:{"loginId":loginId},d
+					success:function() {
+							// {"is_duplicate":true}
+							// {"is_duplicate":false}
+						// 중복된 경우	
+						if(data.is_duplicate) { 	// true가 기본값임
+							alert("중복되었습니다");
 							
-							if(data.result == "success") {
-								location.href = "/user/signin/view";
-								
-							} else {
-								alert("회원가입 실패");
-							}
-							
-						},
-						error:function() {
-							alert("회원가입 에러");
+						} else {	// 중복되지 않은 경우
+							alert("사용 가능 합니다");
 						}
 						
-					});
+					},
+					error:function() {
+						alert("중복 확인 에러");
+					}
 					
 				});
 				
+				
+				
+				
+			}); 
+			
+				
+			$("#signUpBtn").on("click", function() {
+					
+				let id = $("#idInput").val();
+				let password = $("#passwordInput").val();
+				let passwordConfirm = $("#passwordConfirmInput").val();
+				let name = $("#nameInput").val();
+				let email = $("#emailInput").val();
+					
+				if (id == "") {
+					alert("아이디를 입력하세요");
+					return;
+				}
+					
+				if (password == "") {
+					alert("비밀번호를 입력하세요");
+					return;
+				}
+					
+				if (password != passwordConfirm) {
+					alert("비밀번호가 일치하지 않습니다");
+					return;
+				}
+					
+				if (name == "") {
+					alert("이름을 입력하세요");
+					return;
+				}
+					
+				if (email == "") {
+					alert("이메일을 입력하세요");
+					return;
+				}
+					
+					
+					
+				$.ajax({
+					type:"post",
+					url:"/user/signup",
+					data:{"loginId":loginId, "password":password, "name":name, "email":email},
+						
+					success:function(data) {
+							
+						if(data.result == "success") {
+							location.href = "/user/signin/view";
+								
+						} else {
+							alert("회원가입 실패");
+						}
+							
+					},
+					error:function() {
+						alert("회원가입 에러");
+					}
+						
+				});
+					
 			});
+			
+		});
 		
 		
 		</script>
 	
-	</div>
 
 </body>
 </html>
