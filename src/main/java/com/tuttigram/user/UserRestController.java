@@ -32,18 +32,18 @@ public class UserRestController {
 		
 		int count = userBO.addUser(loginId, password, name, email);
 		
-		Map<String, String> result = new HashMap<>();
+		Map<String, String> map = new HashMap<>();
 		
 		if (count == 1) {
-			result.put("result", "success");
+			map.put("result", "success");
 			
 		} else {
-			result.put("result", "fail");
+			map.put("result", "fail");
 		}
 		
-		return result;
-		
+		return map;
 	}
+	
 	
 	
 	// 아이디 중복확인 api
@@ -94,8 +94,6 @@ public class UserRestController {
 		
 		return result;
 		
-		
 	}
-	
 	
 }

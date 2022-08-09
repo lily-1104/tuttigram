@@ -7,7 +7,6 @@ public class User {
 	private int id;
 	private String loginId;
 	private String password;
-	private String confirmPassword;
 	private String name;
 	private String email;
 	private Date createdAt;
@@ -30,12 +29,6 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
 	}
 	public String getName() {
 		return name;

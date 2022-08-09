@@ -26,6 +26,7 @@ public class UserBO {
 	}
 	
 	
+	
 	// 아이디를 전달 받고 중복 여부를 알려주는 메소드
 	public boolean isDuplicate(String loginId) {
 		
@@ -43,13 +44,13 @@ public class UserBO {
 	}
 	
 	
+	
 	// 로그인 API
 	public User getUser(String loginId, String password) {
 		
 		String encryptPassword = EncryptUtils.md5(password);
 		
 		return userDAO.selectUser(loginId, encryptPassword);
-		
 	}
 	
 

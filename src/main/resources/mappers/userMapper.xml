@@ -7,6 +7,7 @@
   
 <mapper namespace="com.tuttigram.user.dao.UserDAO">
 
+
 		<!--  회원가입  -->
 		
 	<insert id="insertUser" parameterType="map">
@@ -35,6 +36,7 @@
 	</insert>
 	
 	
+	
 		<!--  중복 확인  -->
 		
 	<select id="selectCountLoginId" parameterType="string" resultType="int">  
@@ -51,6 +53,9 @@
 	</select>
 	
 	
+	
+		<!--  로그인 API  -->
+		
 	<select id="selectUser" parameterType="map" 
 		resultType="com.tuttigram.user.model.User">
 	
@@ -69,10 +74,6 @@
 		WHERE
 			`loginId` = #{loginId}
 			AND `password` = #{password}
-	
-	
-	
-	
 	
 	</select>
 
