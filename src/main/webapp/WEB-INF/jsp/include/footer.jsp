@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	
 	<hr> 
 	
 	<footer class="d-flex align-items-center justify-content-center">
-		<div class="text-secondary">
-			<small>© 2022 tuttigram all rights reserved.</small>
-		</div>
+		<small class="text-secondary">© 2022 tuttigram all rights reserved.</small>
 	</footer>

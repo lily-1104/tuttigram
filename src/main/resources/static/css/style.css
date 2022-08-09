@@ -6,12 +6,20 @@
 }
 
 
-section {
-   height:600px;
+header {
+	height:40px;
 }
 
 
 
 
 
+.signup-box {
+	width:400px;
+	height:500px;
+}
 
+
+footer {
+	height:50px;
+}
