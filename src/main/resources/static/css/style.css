@@ -20,6 +20,16 @@ header {
 }
 
 
+.search-box {
+	background-color: #eeeeee;
+}
+
+
+.id-box {
+	height:35px;
+	background-color: #dddddd;
+}
+
 footer {
 	height:50px;
 }
