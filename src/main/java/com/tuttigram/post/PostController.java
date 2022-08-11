@@ -13,5 +13,12 @@ public class PostController {
 	}
 	
 	
+	@GetMapping("/post/timeline/vieww")
+	public String timelineVieww() {
+		
+		return "post/timelinee";
+	}
+	
+	
 
 }
