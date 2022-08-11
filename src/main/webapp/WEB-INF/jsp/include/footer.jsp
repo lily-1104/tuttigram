@@ -3,7 +3,7 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	
-	<hr> 
+	<hr class="col-5"> 
 	
 	<footer class="d-flex align-items-center justify-content-center">
 		<small class="text-secondary">© 2022 tuttigram all rights reserved.</small>
