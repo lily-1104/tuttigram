@@ -76,6 +76,31 @@
 			AND `password` = #{password}
 	
 	</select>
+	
+	
+	
+		<!-- // id로 사용자 정보 조회 기능 (PostBO 연동) -->
+		
+	<select id="selectUserById" parameterType="int" 
+		resultType="com.tuttigram.user.model.User">
+	
+		SELECT
+			`id`
+			, `loginId`
+			, `password`
+			, `name`
+			, `email`
+			, `createdAt`
+			, `updatedAt`
+			
+		FROM
+			`user`
+		
+		WHERE
+			`id` = #{id}
+	
+	
+	</select>
 
 
 </mapper>

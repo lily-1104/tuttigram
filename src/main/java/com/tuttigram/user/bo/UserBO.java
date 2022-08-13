@@ -53,5 +53,13 @@ public class UserBO {
 		return userDAO.selectUser(loginId, encryptPassword);
 	}
 	
+	
+	
+	// id로 사용자 정보 조회 기능 (PostBO 연동)
+	public User getUserById(int id) {
+		
+		return userDAO.selectUserById(id);
+	}
+	
 
 }

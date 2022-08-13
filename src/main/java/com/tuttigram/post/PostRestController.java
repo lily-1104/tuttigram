@@ -7,28 +7,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.tuttigram.post.bo.PostBO;
 
-@Controller
+@RestController
 public class PostRestController {
 	
 	@Autowired
 	private PostBO postBO;
 	
 	
-	// 글쓰기
+	// 글 쓰기
 	@PostMapping("/post/create")
-	public Map<String, String> commentCreate(
+	public Map<String, String> createPost(
 			@RequestParam("content") String content
 			, HttpServletRequest request) {
 		
+		// 글 쓴 사람 정보를 같이 저장하기 위해서 
+		// 로그인된 사용자의 id (user 테이블 pk)를 세션을 통해서 얻어내고 이를 사용한다
 		HttpSession session = request.getSession();
-		
-		int userId = (Integer) session.getAttribute("userId");
+		int userId = (Integer) session.getAttribute("userId");	// 다운 캐스팅  
 		
 		int count = postBO.addPost(userId, content);
 		
