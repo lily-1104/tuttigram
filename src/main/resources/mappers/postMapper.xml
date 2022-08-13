@@ -7,7 +7,7 @@
 <mapper namespace="com.tuttigram.post.dao.PostDAO">
 
 
-	<!-- 글쓰기 -->
+		<!-- 글쓰기 -->
 	
 	<insert id="insertPost" parameterType="map">
 	
@@ -15,7 +15,8 @@
 			`post`
 		(
 			`userId`
-			,  `content`
+			, `content`
+			, `imagePath`
 			, `createdAt`
 			, `updatedAt`
 		)
@@ -24,12 +25,35 @@
 		(
 			#{userId}
 			, #{content}
+			, #{imagePath}
 			, now()
 			, now()
 		)
 	
 	</insert>
 	
+	
+	
+		<!-- 게시물 업로드 -->
+		
+	<select id="selectPostList" parameterType="int"
+		resultType="com.tuttigram.post.model.Post">
+	
+	SELECT
+		`id`
+		, `userId`
+		, `content`
+		, `imagePath`
+		, `createdAt`
+		, `updatedAt`
+	 
+	FROM
+		`post`
+	
+	ORDER BY
+		`id` DESC
+	
+	</select>
 
 
 
