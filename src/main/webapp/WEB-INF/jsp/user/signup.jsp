@@ -38,9 +38,11 @@
 					<div class="join-box">
 					
 						<div class="d-flex mt-4">
-							<input type="text" class="form-control col-8" id="idInput" placeholder="아이디">
-							<button type="button" class="btn btn-primary ml-2">중복확인</button>
+							<input type="text" class="form-control col-8" id="loginIdInput" placeholder="아이디">
+							<button type="button" class="btn btn-primary ml-2" id="isDuplicateBtn">중복확인</button>
 						</div>
+						<div id="duplicateText" class="d-none"><small class="text-danger">중복된 ID 입니다</small></div>
+						<div id="possibleText" class="d-none"><small class="text-success">사용가능한 ID 입니다</small></div>
 						
 						<input type="password" class="form-control mt-3" id="passwordInput" placeholder="비밀번호">
 						<input type="Password" class="form-control mt-3" id="passwordConfirmInput" placeholder="비밀번호 확인">
@@ -150,7 +152,7 @@
 				// 중복 체크 여부 유효성 검사 
 					// if (isDuplicateCheck == false) {
 				if (!isDuplicateCheck) {	// 위의 코드랑 두개 다 사용 가능
-					alert("중복 여부 체크를 진행해주세요");
+					alert("아이디 중복 여부 체크를 진행해주세요");
 					return;
 				}
 				

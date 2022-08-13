@@ -38,14 +38,14 @@
 	                	
 	                	<br>
 	                	
-	                	<div class="loginForm">
+	                	<form id="loginForm">
 		                    <input type="text" class="form-control mt-4" id="loginIdInput" placeholder="아이디">
 		                    <input type="password" class="form-control mt-3" id="passwordInput" placeholder="비밀번호">
 		                  
 		                    <button type="submit" id="loginBtn" class="btn btn-primary btn-block mt-4">로그인</button>
 	                 		
 	                 		<hr class="mt-3">
-	                 	</div>
+	                 	</form>
 	                 	
 	                    <div class="text-center text-secondary mt-2">
 	                    	<small>비밀번호를 잊으셨나요?</small>
@@ -70,7 +70,7 @@
 		<script>
 			$(document).ready(function() {
 				
-				$("#loginForm").on("submit", function(e)) {
+				$("#loginForm").on("submit", function(e) {
 					
 					// 해당 이벤트가 가지고 있는 기능을 비활성화
 					e.preventDefault();
@@ -99,7 +99,7 @@
 						success:function(data) {
 							
 							if(data.result == "success") {
-								location.href = "/post/timeline/view";
+								location.href = "/post/timeline/vieww";
 								
 							} else {
 								alert("아이디/비밀번호를 확인해주세요");
