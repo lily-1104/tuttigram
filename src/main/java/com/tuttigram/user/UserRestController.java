@@ -47,7 +47,7 @@ public class UserRestController {
 	
 	
 	// 아이디 중복확인 api
-	@GetMapping("/user/duplicated_id")
+	@GetMapping("/user/duplicate_id")
 	public Map<String, Boolean> isDuplicate(String loginId) {
 		
 			// {"is_duplicate":true}
