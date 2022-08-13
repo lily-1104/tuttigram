@@ -25,7 +25,7 @@
 	
 		<c:import url="/WEB-INF/jsp/include/header.jsp" />
 		
-		<hr class="col-5">
+		<hr>
 		
 		<section class="content d-flex justify-content-center">
 		
@@ -38,20 +38,21 @@
 							<!-- border-0 : 외곽선의 두께를 0으로 변경 -->
 					<div class="d-flex mt-2 justify-content-between">
 						<input type="file">
-						<button type="button" id="saveBtn" class="btn btn-primary">업로드</button>
+						<button type="button" id="uploadBtn" class="btn btn-primary">업로드</button>
 					</div>
 				</div>
 				<!-- /입력 상자 -->
 			
 				<!-- 피드들 -->
 				<div class="mt-4">
+					<c:forEach var="postDetail" items="${postList }">
 				
 					<!-- 피드 -->
-					<div class="border rounded">
+					<div class="border rounded mt-3">
 					
 						<!-- 타이틀 -->
 						<div class="d-flex justify-content-between p-2">
-							<div><b>lily</b></div>
+							<div><b>${postDetail.user.loginId }</b></div>
 							<div><i class="bi bi-three-dots"></i></div>
 						</div>
 						<!-- /타이틀 -->
@@ -69,8 +70,9 @@
 						
 						<!-- 게시글 -->
 						<div class="p-2 d-flex">
-							<b>lily</b> 
-							<div class="ml-2">점심 메뉴 추천해주세요</div>
+							<b class="mr-2">${postDetail.user.loginId }</b>  
+							${postDetail.post.content }
+									<!-- <div class="ml-2">점심 메뉴 추천해주세요</div>  -->
 						</div>
 						<!-- /게시글 -->
 						
@@ -104,7 +106,8 @@
 						
 					</div>
 					<!-- /피드 -->
-				
+					
+					</c:forEach>
 				</div>
 				<!-- /피드들 -->
 				
@@ -121,9 +124,9 @@
 	<script>
 		$(document).ready(function() {
 			
-			$("#saveBtn").on("click", function() {
+			$("#uploadBtn").on("click", function() {
 				
-				let content = $("#contentInput").val().trim();
+				let content = $("#contentInput").val().trim();	 // <textarea>는 trim 함수 사용
 				
 				if(content == "") {
 					alert("내용을 입력하세요");
@@ -131,20 +134,22 @@
 				}
 				
 				
+				// 사용자가 입력한 content로 api를 호출해서 데이터를 입력한다
 				$.ajax({
 					type:"post",
-					url:"/post/timelinee",
+					url:"/post/create",
 					data:{"content":content},
 					success:function(data) {
 						
 						if(data.result == "success") {
-							location.href = "/post/timelinee";
+							location.reload();
 							
 						} else {
 							alert("업로드 실패");
 						}
 						
-					} error:function() {
+					},
+					error:function() {
 						alert("업로드 에러");
 					}
 						
@@ -155,5 +160,6 @@
 		});
 	
 	</script>
+	
 </body>
 </html>
