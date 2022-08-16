@@ -99,7 +99,6 @@
 		WHERE
 			`id` = #{id}
 	
-	
 	</select>
 
 
