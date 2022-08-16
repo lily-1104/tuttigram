@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.tuttigram.common.FileManagerService;
 import com.tuttigram.post.dao.PostDAO;
 import com.tuttigram.post.model.Post;
 import com.tuttigram.post.model.PostDetail;
@@ -25,9 +27,15 @@ public class PostBO {
 	
 	
 	// 글 쓰기
-	public int addPost(int userId, String content) {
+	public int addPost(int userId, String content, MultipartFile file) {
 		
-		return postDAO.insertPost(userId, content, ""); 	// imagePath는 ""로!  
+		// 파일 저장  =>  해당 파일을 외부에서 접근할 수 있는 경로를 만들어서 dao로 전달
+		String imagePath = FileManagerService.saveFile(userId, file);
+		
+		
+		return postDAO.insertPost(userId, content, imagePath); 	
+								// imagePath 대신 "" 적음 (파일 저장 코딩 안됐을 때 임시로 사용, 나중에는 지금처럼 imagePath로 수정!)  
+	
 	}
 	
 	
