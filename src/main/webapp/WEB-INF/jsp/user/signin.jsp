@@ -99,7 +99,7 @@
 						success:function(data) {
 							
 							if(data.result == "success") {
-								location.href = "/post/timeline/vieww";
+								location.href = "/post/timeline/view";
 								
 							} else {
 								alert("아이디/비밀번호를 확인해주세요");
