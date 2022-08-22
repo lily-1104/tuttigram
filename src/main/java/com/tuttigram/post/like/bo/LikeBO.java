@@ -11,9 +11,19 @@ public class LikeBO {
 	@Autowired
 	private LikeDAO likeDAO;
 	
-//	public int addLike(int postId, int userId) {
+	
+	// 좋아요
+	public int addLike(int postId, int userId) {
 		
+		return likeDAO.insertLike(postId, userId);
+	}
+	
+	
+	
+	// postId로 좋아요 개수 조회
+	public int countLike(int postId) {
 		
-//	}
+		return likeDAO.selectCountLike(postId);
+	}
 
 }

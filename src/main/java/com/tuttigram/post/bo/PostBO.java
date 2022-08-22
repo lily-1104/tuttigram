@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.tuttigram.common.FileManagerService;
 import com.tuttigram.post.dao.PostDAO;
+import com.tuttigram.post.like.bo.LikeBO;
 import com.tuttigram.post.model.Post;
 import com.tuttigram.post.model.PostDetail;
 import com.tuttigram.user.bo.UserBO;
@@ -24,6 +25,11 @@ public class PostBO {
 	// userBO 호출
 	@Autowired
 	private UserBO userBO;
+	
+	
+	@Autowired
+	private LikeBO likeBO;
+	
 	
 	
 	// 글 쓰기
@@ -57,15 +63,18 @@ public class PostBO {
 		for(Post post : postList) {
 			
 			int userId = post.getUserId();
+			int postId = post.getId();
 			
 			// user 테이블 조회
 			// userBO를 통해서 userId와 일치하는 사용자 정보 조회 (userBO 호출)
 			User user = userBO.getUserById(userId);
-			
+			int likeCount = likeBO.countLike(postId);
+					
 			// 게시글과 사용자 정보를 합치는 과정
 			PostDetail postDetail = new PostDetail();
 			postDetail.setPost(post);
 			postDetail.setUser(user);
+			postDetail.setLikeCount(likeCount);
 			
 			postDetailList.add(postDetail);
 		}

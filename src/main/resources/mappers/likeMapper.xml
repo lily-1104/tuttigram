@@ -5,7 +5,9 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.tuttigram.post.like.dao.LikeDAO">
-
+	
+	
+		<!--  좋아요 -->
 	<insert id="insertLike" parameterType="map">
 	
 		INSERT INTO
@@ -17,15 +19,29 @@
 			, `createdAt`
 		)
 		
-		VALUES
+		VALUES (
+			#{postId}
+			, #{userId}
+			, now()
+		)
 			
-		
-	
-	
-	
-	
 	</insert>
-
+	
+	
+	
+		<!-- postId로 좋아요 개수 조회 -->
+	<select id="selectCountLike" parameterType="int" resultType="int">
+		
+		SELECT
+			count(1)
+		
+		FROM
+			`like`
+		
+		WHERE
+			`postId` = #{postId}	
+		
+	</select>
 
 
 </mapper>
