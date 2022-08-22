@@ -58,7 +58,16 @@
 						<!-- 타이틀 -->
 						<div class="d-flex justify-content-between p-2">
 							<div><b>${postDetail.user.loginId }</b></div>
-							<div><i class="bi bi-three-dots"></i></div>
+							<div>
+									<%-- 로그인 한 사용자 userId가 해당 게시글의 사용자 userId가 일치하는 경우에 해당 버튼 노출 --%>
+								<c:if test="${userId eq postDetail.user.id }">
+								
+									<%-- 삭제 버튼 --%>
+								<a href="#" data-toggle="mpodal" data-target="moreModal" class="more-btn" data-post-id="${postDetail.post.id }">
+																					<!-- 'data-'는 정해진 값, 'post-id'는 내가 정한 변수 -->
+									<i class="bi bi-three-dots"></i></a>
+								</c:if>
+							</div>
 						</div>
 						<!-- /타이틀 -->
 						
@@ -68,10 +77,10 @@
 						
 						<!-- 좋아요 -->
 						<div class="p-2 d-flex mt-2">
-							<a href="#" class="like-btn" data-post-id="${postDetail.post.id }">
-									<!-- 좋아요를 여러개 만들어야하니까 class로 만듦, id로 만들면 하나밖에 안됨 -->
-								<span class="heart-size"> <i class="bi bi-heart" ></i> </span>
-							</a>
+								<a href="#" class="like-btn" data-post-id="${postDetail.post.id }">
+										<!-- 좋아요를 여러개 만들어야하니까 class로 만듦, id로 만들면 하나밖에 안됨 -->
+									<span class="heart-size"> <i class="bi bi-heart" ></i> </span>
+								</a>
 							<div class="ml-2">좋아요 ${postDetail.likeCount }개 </div>
 						</div>
 						<!-- /좋아요 -->
@@ -125,12 +134,69 @@
 		</section>
 		
 		<c:import url="/WEB-INF/jsp/include/footer.jsp" />
+		
+		
+			<!-- 'bootstrap modal' 구글링 -> Vertically centered 코드 복사 -->
+		<!-- Modal -->
+		<div class="modal fade" id="moreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      
+		      <div class="modal-body text-center">
+		        <a href="#" id="deleteBtn">삭제하기</a>
+		      </div>
+		      
+		    </div>
+		  </div>
+		</div>
 	
 	</div>
 	
 	
 	<script>
 		$(document).ready(function() {
+			
+			$(".more-btn").on("click", function() {
+				
+				// 이벤트가 발생한 버튼에서 post-id를 얻어 온다
+				let postId = $(this).data("post-id");
+				
+				
+				
+				// 삭제하기 버튼에 해당 post-id를 저장한다 (data-post-id 속성에 값을 넣는다)
+					// <a href="#" id="deleteBtn" data-post-id="8">삭제하기</a>
+				$("deleteBtn").data("post-id", postId);
+				
+				
+			});
+			
+			
+			// 피드 삭제 버튼
+			$("#deleteBtn").on("click", function() {
+				
+				// postId
+				let postId = $(this).data("post-id");
+				
+				$.ajax({
+					type:"get",
+					url:"/post/delete",
+					data:{"postId":postId},
+					success:function(data) {
+						if(data.result == "success") {
+							location.reload();
+						} else {
+							alert("삭제 실패");
+						}
+					},
+					error:function() {
+						alert("삭제 에러");
+					}
+					
+				});
+				
+			});
+			
+			
 			
 			// 댓글 입력
 			$(".comment-btn").on("click", function() {
@@ -162,6 +228,39 @@
 					},
 					error:function() {
 						alert("댓글 작성 에러");
+					}
+					
+				});
+				
+			});
+			
+			
+			
+			// 좋아요 취소
+			$(".unlike-btn").on("click", function(e) {
+				
+				// alert();
+				
+				e.preventDefault();		// <a>의 #은 페이지 이동이라서 맨 위로 링크가 올라감, 그것을 방지하기 위해 사용
+				
+				let postId = $(this).data("post-id");
+				
+				$.ajax({
+					
+					type:"get".
+					url:"/post/unlike",
+					data:{"postId":postId},
+					success:function(data) {
+						
+						if(data.result == "success") {
+							location.reload();
+						} else {
+							alert("좋아요 취소 실패")
+						}
+					},
+					error:function() {
+						
+						alert("좋아요 취소 에러");
 					}
 					
 				});
