@@ -29,6 +29,20 @@
 	
 	
 	
+		<!-- 좋아요 취소 api -->
+	<delete id="deleteLike" parameterType="map">
+	
+		DELETE FROM
+			`like`
+		
+		WHERE
+			`postId` = #{postId}
+			AND `userId` = #{userId}
+	
+	</delete>
+	
+	
+	
 		<!-- postId로 좋아요 개수 조회 -->
 	<select id="selectCountLike" parameterType="int" resultType="int">
 		
@@ -42,6 +56,20 @@
 			`postId` = #{postId}	
 		
 	</select>
+	
+	
+	
+		<!-- 해당하는 postId의 좋아요 모두 삭제 -->
+		
+	<delete id="deleteLikeByPostId" parameterType="int">
+	
+		DELETE FROM
+			`like`
+		
+		WHERE
+			`postId` = #{postId}
+	
+	</delete>
 
 
 </mapper>
