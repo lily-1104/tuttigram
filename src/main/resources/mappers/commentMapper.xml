@@ -29,10 +29,22 @@
 			, now()
 		)
 	
-	
-	
 	</insert>
-
+	
+	
+	
+		<!-- 해당하는 postId의 모든 댓글 삭제 -->
+	
+	<delete id="deleteComment" parameterType="int">
+	
+		DELETE FROM
+			`comment`
+		
+		WHERE
+			`postId` = #{postId}
+	
+	</delete>
+	
 
 
 

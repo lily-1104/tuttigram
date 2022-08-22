@@ -11,4 +11,8 @@ public interface CommentDAO {
 			, @Param("userId") int userId
 			, @Param("content") String content);
 
+	
+	
+	// 해당하는 postId의 모든 댓글 삭제
+	public int deleteComment(@Param("postId") int postId);
 }

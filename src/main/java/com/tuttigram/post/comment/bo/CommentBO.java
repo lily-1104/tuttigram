@@ -14,5 +14,13 @@ public class CommentBO {
 //	public int addComment (int postId, int userId, String content) {
 		
 //	}
+	
+	
+	
+	// 해당하는 postId의 모든 댓글 삭제
+	public int deleteComment(int postId) {
+		
+		return commentDAO.deleteComment(postId);
+	}
 
 }
