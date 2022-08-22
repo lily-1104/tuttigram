@@ -72,7 +72,7 @@
 									<!-- 좋아요를 여러개 만들어야하니까 class로 만듦, id로 만들면 하나밖에 안됨 -->
 								<span class="heart-size"> <i class="bi bi-heart" ></i> </span>
 							</a>
-							<div class="ml-2">좋아요 11개</div>
+							<div class="ml-2">좋아요 ${postDetail.likeCount }개 </div>
 						</div>
 						<!-- /좋아요 -->
 						
@@ -104,8 +104,8 @@
 							
 							<!-- 댓글 입력 -->
 							<div class="d-flex mt-3 p-0">
-								<input type="text" class="form-control" placeholder="댓글 달기...">
-								<button type="button" class="btn btn-primary ml-2">게시</button>
+								<input type="text" class="form-control" placeholder="댓글 달기..." id="commentInput${postDetail.post.id }">  <!-- 댓글이 모든 게시물에 중복은 아니니까 id 뒤에 ${postDetail.post.id } 붙임 -->
+								<button data-post-id="${postDetail.post.id }" type="button" class="btn btn-primary ml-2 comment-btn">게시</button>
 							</div>
 							<!-- /댓글 입력 -->
 						
@@ -132,13 +132,75 @@
 	<script>
 		$(document).ready(function() {
 			
+			// 댓글 입력
+			$(".comment-btn").on("click", function() {
+				
+				// alert();
+				
+				// 이벤트가 일어난 버튼에서 postId를 얻어온다
+					// this = 현재 이벤트가 발생한 버튼, 그 버튼 안에 postId를 심어놨기때문에 post-id를 얻어오는 것
+					// 얻어 오는 방법 : data 속성 안에 넣어놔서 data를 통해서 얻어옴 
+				let postId = $(this).data("post-id");
+
+				// 작성한 댓글 가져오기
+				// #commentInput5
+				let content = $("#commentInput" + postId).val();
+				
+				// alert(content);
+				
+				$.ajax({
+					type:"post",
+					url:"/post/comment/create",
+					data:{"post":postId, "content":content},
+					success:function(data) {
+						if (data.result == "success") {
+							location.reload();
+						} else {
+							alert("댓글 작성 실패")
+						}
+						
+					},
+					error:function() {
+						alert("댓글 작성 에러");
+					}
+					
+				});
+				
+			});
+			
+			
+			
 			// 좋아요 누르기
 			$(".like-btn").on("click", function(e) {
 				
 				e.preventDefault();
 				
 				// 현재 클릭된 태그 객체를 얻어와서 postId를 얻어온다
-				alert();
+				// ex) data-post-id="10"  => data-post-id 속성에 "10"의 형태로 값이 세팅되어있음
+										  // 'data-'는 정해져있고 뒤에 'post-id'는 내가 원하는 이름으로 가능  
+				let postId = $(this).data("post-id");
+				
+					// 테스트
+				// alert(postId);
+				
+				$.ajax({
+					
+					type:"get",
+					url:"/post/like",
+					data:{"postId":postId},
+					success:function(data) {
+						if(data.result == "success") {
+							location.reload();
+						} else {	
+							alert("좋아요 실패");
+						}
+					},
+					
+					error:function() {
+						alert("좋아요 에러");
+					}
+					
+				});
 				
 			});
 			
@@ -149,9 +211,8 @@
 				// alert();
 				
 				// fileInput을 클릭한 효과를 만들어야한다
-					// e.preventDefault();		// 해당하는 태그가 가지고 있는 기능을 막음 (어디에서든 사용 가능), 이 코드 쓰면 아이콘으로 파일 업로드 불가
+				e.preventDefault();		// 해당하는 태그가 가지고 있는 기능을 막음 (어디에서든 사용 가능), 이 코드 쓰면 아이콘으로 파일 업로드 불가
 				$("#fileInput").click();
-				
 			});
 			
 			
