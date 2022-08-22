@@ -33,6 +33,13 @@ public class PostBO {
 		String imagePath = FileManagerService.saveFile(userId, file);
 		
 		
+		// 파일 저장이 실패한 경우
+		if(imagePath == null) {
+			
+			return -1;	// 1이 아닌 결과로 리턴해야함 (PostRestController에서 if(count == 1)이 아니면 "fail"로 리턴하기 때문에
+		}
+		
+		
 		return postDAO.insertPost(userId, content, imagePath); 	
 								// imagePath 대신 "" 적음 (파일 저장 코딩 안됐을 때 임시로 사용, 나중에는 지금처럼 imagePath로 수정!)  
 	
