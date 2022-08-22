@@ -39,7 +39,8 @@
 						
 					<!-- 파일 업로드 -->
 					<div class="d-flex mt-2 justify-content-between">
-						<input type="file" id="fileInput">
+						<a href="#" id="imageIcon"> <i class="bi bi-image"></i> </a>
+						<input type="file" id="fileInput" class="d-none">
 						<button type="button" id="uploadBtn" class="btn btn-primary">업로드</button>
 					</div>
 					<!-- /파일 업로드 -->
@@ -62,12 +63,15 @@
 						<!-- /타이틀 -->
 						
 						<div>
-							<img class="w-100" src="https://img.insight.co.kr/static/2022/04/26/700/img_20220426101341_o1p9v26t.webp">
+							<img class="w-100" src="${postDetail.post.imagePath }">
 						</div>
 						
 						<!-- 좋아요 -->
-						<div class="p-2 d-flex">
-							<i class="bi bi-heart"></i> 
+						<div class="p-2 d-flex mt-2">
+							<a href="#" class="like-btn" data-post-id="${postDetail.post.id }">
+									<!-- 좋아요를 여러개 만들어야하니까 class로 만듦, id로 만들면 하나밖에 안됨 -->
+								<span class="heart-size"> <i class="bi bi-heart" ></i> </span>
+							</a>
 							<div class="ml-2">좋아요 11개</div>
 						</div>
 						<!-- /좋아요 -->
@@ -128,6 +132,30 @@
 	<script>
 		$(document).ready(function() {
 			
+			// 좋아요 누르기
+			$(".like-btn").on("click", function(e) {
+				
+				e.preventDefault();
+				
+				// 현재 클릭된 태그 객체를 얻어와서 postId를 얻어온다
+				alert();
+				
+			});
+			
+			
+			
+			// 아이콘으로 파일 선택
+			$("#imageIcon").on("click", function() {
+				// alert();
+				
+				// fileInput을 클릭한 효과를 만들어야한다
+					// e.preventDefault();		// 해당하는 태그가 가지고 있는 기능을 막음 (어디에서든 사용 가능), 이 코드 쓰면 아이콘으로 파일 업로드 불가
+				$("#fileInput").click();
+				
+			});
+			
+			
+			
 			$("#uploadBtn").on("click", function() {
 				
 				let content = $("#contentInput").val().trim();	 // <textarea>는 trim 함수 사용
@@ -138,10 +166,20 @@
 				}
 				
 				
+				
+				// 파일 선택 유효성 검사
+					// $("#fileInput")[0].files[0]
+				if ($("#fileInput")[0].files.length == 0) {
+					alert("이미지를 선택하세요");
+					return;
+				}
+				
+				
+				
 				// 파일을 포함한 파라미터 구성하기 (file은 필수 항목 아니라서 밸리데이션 따로 없음)
-				var formData = new formData();
-				formData.append("content" = content);
-				formData.append("file", ${"#fileInput"}[0].files[0]);	// index 0으로 설정
+				var formData = new FormData();
+				formData.append("content", content);
+				formData.append("file", $("#fileInput")[0].files[0]);	// index 0으로 설정
 				
 				
 				
@@ -149,7 +187,7 @@
 				$.ajax({
 					type:"post",
 					url:"/post/create",
-					data:{"content":content},//formData,	 // 파일 업로드 때문에 formData로 변경
+					data:formData,	 // 파일 업로드 때문에 formData로 변경
 					enctype:"multipart/form-data",	// 파일 업로드 필수 옵션
 					processData:false,				// 파일 업로드 필수 옵션
 					contentType:false,				// 파일 업로드 필수 옵션
