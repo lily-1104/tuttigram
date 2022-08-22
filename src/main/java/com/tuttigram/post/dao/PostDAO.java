@@ -24,4 +24,11 @@ public interface PostDAO {
 	public List<Post> selectPostList();
 	
 	
+	// 파일 삭제
+	public Post selectPost(@Param("postId") int postId);
+	
+	
+	
+	// 게시글 삭제
+	public int deletePost(@Param("postId") int postId, @Param("userId") int userId);
 }

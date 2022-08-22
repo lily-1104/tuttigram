@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.tuttigram.common.FileManagerService;
+import com.tuttigram.post.comment.bo.CommentBO;
 import com.tuttigram.post.dao.PostDAO;
 import com.tuttigram.post.like.bo.LikeBO;
 import com.tuttigram.post.model.Post;
@@ -29,6 +30,10 @@ public class PostBO {
 	
 	@Autowired
 	private LikeBO likeBO;
+	
+	
+	@Autowired
+	private CommentBO commentBO; 
 	
 	
 	
@@ -81,5 +86,36 @@ public class PostBO {
 		
 		return postDetailList;
 	}
+	
+	
+	
+	// 게시글 삭제
+	public int deletePost(int postId, int userId) {
+		
+		Post post = postDAO.selectPost(postId);
+		int count = postDAO.deletePost(postId, userId);
+		
+		if(count == 1) {
+			
+		// 파일 삭제  => 파일 경로 알아오기 
+//		FileManagerService.removeFile(post.getImagePath());
+		
+		// 댓글 삭제
+		commentBO.deleteComment(postId);
+		
+		// 좋아요 삭제
+		likeBO.deleteLikeByPostId(postId);
+		
+		}
+	
+		return count;
+		
+		// 게시글 삭제
+//		return postDAO.deletePost(postId, userId);
+//		return 1;
+		
+	} // else {
+//		return 0;
+//	}
 	
 }
