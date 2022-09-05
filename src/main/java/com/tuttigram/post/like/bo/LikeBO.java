@@ -35,6 +35,21 @@ public class LikeBO {
 	}
 	
 	
+	// 특정 postId에 로그인한 사용자의 userId로 좋아요 했는지 여부
+	public boolean isLike(int postId, int userId) {	  // 좋아요 했는지 안했는지라서 boolean 사용
+		
+		// postId와 userId가 모두 일치하는 행의 개수
+		int count = likeDAO.selectCountLikeByPostUserId(postId, userId);
+		
+		if(count == 0) {
+			return false;
+		} else {
+			return true;
+		}
+		
+	}
+	
+	
 	
 	// 해당하는 postId의 좋아요 모두 삭제
 	public int deleteLikeByPostId(int postId) {

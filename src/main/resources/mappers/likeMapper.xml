@@ -8,13 +8,13 @@
 	
 	
 		<!--  좋아요 -->
+		
 	<insert id="insertLike" parameterType="map">
 	
 		INSERT INTO
 			`like`
 		(
-			`id`
-			, `postId`
+			`postId`
 			, `userId`
 			, `createdAt`
 		)
@@ -30,6 +30,7 @@
 	
 	
 		<!-- 좋아요 취소 api -->
+		
 	<delete id="deleteLike" parameterType="map">
 	
 		DELETE FROM
@@ -44,6 +45,7 @@
 	
 	
 		<!-- postId로 좋아요 개수 조회 -->
+		
 	<select id="selectCountLike" parameterType="int" resultType="int">
 		
 		SELECT
@@ -55,6 +57,24 @@
 		WHERE
 			`postId` = #{postId}	
 		
+	</select>
+	
+	
+	
+		<!-- postId와 userId가 모두 일치하는 행의 개수 -->
+	
+	<select id="selectCountLikeByPostUserId" parameterType="map" resultType="int">
+	
+		SELECT
+			count(1)
+		
+		FROM
+			`like`
+			
+		WHERE
+			`postId` = #{postId}
+			AND `userId` = #{userId}	
+	
 	</select>
 	
 	
