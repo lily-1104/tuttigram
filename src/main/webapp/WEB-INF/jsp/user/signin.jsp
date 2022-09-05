@@ -54,9 +54,10 @@
 	         		</div>
 	            </div>
 	            
-	            <div class="mt-4 p-2 align-items-center border rounded">
+	            <div class="mt-4 p-2 align-items-center border rounded">	<!-- d-flex -->
 	               <small class="text-secondary">계정이 없으신가요?
-	               <a href="/user/signup/view" class="ml-3"><b>가입하기</b></a></small>
+	               		<a href="/user/signup/view" class="ml-3"><b>가입하기</b></a>
+	               </small>
 	            </div>
 	            
          	</div>
@@ -66,57 +67,57 @@
 		<c:import url="/WEB-INF/jsp/include/footer.jsp" />
 		
 	</div>
-		
-		<script>
-			$(document).ready(function() {
+	
+	<script>
+		$(document).ready(function() {
 				
-				$("#loginForm").on("submit", function(e) {
+			$("#loginForm").on("submit", function(e) {
 					
-					// 해당 이벤트가 가지고 있는 기능을 비활성화
-					e.preventDefault();
+				// 해당 이벤트가 가지고 있는 기능을 비활성화
+				e.preventDefault();
 					
-					// loginId와 password를 통해서 로그인 진행
-					// 로그인 api 호출
-					let loginId = $("#loginIdInput").val();
-					let password = $("#passwordInput").val();
+				// loginId와 password를 통해서 로그인 진행
+				// 로그인 api 호출
+				let loginId = $("#loginIdInput").val();
+				let password = $("#passwordInput").val();
 					
-					if (loginId == "") {
-						alert("아이디를 입력하세요");
-						return;
-					}
+				if (loginId == "") {
+					alert("아이디를 입력하세요");
+					return;
+				}
 					
-					if (password == "") {
-						alert("비밀번호를 입력하세요");
-						return;
-					}
+				if (password == "") {
+					alert("비밀번호를 입력하세요");
+					return;
+				}
 					
 					
-					$.ajax({
-						type:"post",
-						url:"/user/signin",
-						data:{"loginId":loginId, "password":password},
+				$.ajax({
+					type:"post",
+					url:"/user/signin",
+					data:{"loginId":loginId, "password":password},
 						
-						success:function(data) {
+					success:function(data) {
 							
-							if(data.result == "success") {
-								location.href = "/post/timeline/view";
+						if(data.result == "success") {
+							location.href = "/post/timeline/view";
 								
-							} else {
-								alert("아이디/비밀번호를 확인해주세요");
-							}
-							
-						},
-						error:function() {
-							alert("로그인 에러");
+						} else {
+							alert("아이디/비밀번호를 확인해주세요");
 						}
+							
+					},
+					error:function() {
+						alert("로그인 에러");
+					}
 						
-					});
-					
 				});
-				
+					
 			});
+				
+		});
 		
-		</script>
+	</script>
 
 </body>
 
