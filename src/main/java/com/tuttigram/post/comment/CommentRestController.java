@@ -20,7 +20,6 @@ public class CommentRestController {
 	private CommentBO commentBO;
 	
 	
-	
 	// 댓글 입력 
 	@PostMapping("/post/comment/create")
 	public Map<String, String> createComment(
@@ -34,14 +33,14 @@ public class CommentRestController {
 		
 		Map<String, String> map = new HashMap<>();
 		
-//		int count = commentBO.addComment(postId, userId, content);
+		int count = commentBO.addComment(postId, userId, content);
 		
-//		if (count == 1) {
-//			map.put("result", "success");
-//			
-//		} else {
-//			map.put("result", "fail");
-//		}
+		if (count == 1) {
+			map.put("result", "success");
+			
+		} else {
+			map.put("result", "fail");
+		}
 		
 		return map;
 		
