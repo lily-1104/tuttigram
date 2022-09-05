@@ -35,7 +35,18 @@ public class FileManagerService {
 		}
 		
 		
+		// 파일을 어디에 저장할지 폴더 경로 설정
 		
+		
+		// 예시) C:\\Users\\User\\Desktop\\개발\\Spring\\Project\\upload/3_48551451742/asdf.jpg
+				// (위의 예시에서) 언더바 : user가 같은 사진을 올렸을 경우 업로드한 시간으로 구분하기 위해서 사용
+		// 디렉토리(폴더)를 새로 만든다
+		// 디렉토리 이름 규칙
+		// 사용자 구분  => userId
+		// 시간 정보 - UNIX 타임 : 1970년 1월 1일을 기준으로 몇 millisecond(1/1000 초)가 지났는지를 표현 
+				
+				
+			// /3_48551451742
 		String directoryName = userId + "_" + System.currentTimeMillis() + "/";
 		
 		
@@ -56,7 +67,7 @@ public class FileManagerService {
 		// 파일 저장
 		try {
 			byte[] bytes = file.getBytes();
-			
+				// C:\\Users\\User\\Desktop\\개발\\Spring\\Project\\upload/3_48551451742/asdf.jpg
 			Path path = Paths.get(filePath + file.getOriginalFilename());
 			Files.write(path, bytes);
 			
@@ -71,9 +82,60 @@ public class FileManagerService {
 		
 		
 		// 외부에서 접근 가능한 경로 리턴 
+		// 규칙 정하기  =>  /images/3_48551451742/asdf.jpg
+			// <img src="/images/3_48551451742/asdf.jpg">  이렇게 사용 가능
 		return "/images/" + directoryName + file.getOriginalFilename();
 		
-		
+	}
+	
+	
+	
+	// 이미지 파일 삭제  => 파일 삭제가 문제가 됐는지 확인하기 위헤 boolean 사용
+	public static boolean removeFile(String filePath) {	// /images/3_1241241/text.png
+			
+		if(filePath == null) {
+				
+			return false;
+		}
+			
+		String realFilePath = FILE_UPLOAD_PATH + filePath.replace("/images/", "");
+			
+		Path path = Paths.get(realFilePath);
+			
+		// 파일이 있는지 확인 (파일이 있을 경우에만 삭제)
+		if(Files.exists(path)) {
+				
+			try {
+				Files.delete(path);
+			} catch (IOException e) {
+					
+				e.printStackTrace();
+					
+				return false;
+			}
+				
+		}
+			
+			// 파일 => C/:\\Users\\User\\Desktop\\개발\\Spring\\Project\\upload/3_48551451742/asdf.jpg
+			
+			// 폴더 지우려면 => C/:\\Users\\User\\Desktop\\개발\\Spring\\Project\\upload/3_48551451742
+			
+		path = path.getParent();
+			
+		// 디렉토리가 존재하는지 확인
+		if(Files.exists(path)) {
+			try {
+				Files.delete(path);
+			} catch (IOException e) {
+					
+				e.printStackTrace();
+				return false;	// 문제가 됐으면 false로 return
+			}
+				
+		}
+			
+		return true;	// 문제가 없으면 true로 return
+			
 	}
 
 }
