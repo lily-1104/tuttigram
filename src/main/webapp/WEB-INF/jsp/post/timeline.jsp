@@ -63,9 +63,11 @@
 								<c:if test="${userId eq postDetail.user.id }">
 								
 									<%-- 삭제 버튼 --%>
-								<a href="#" data-toggle="mpodal" data-target="moreModal" class="more-btn" data-post-id="${postDetail.post.id }">
+								<a href="#" data-toggle="modal" data-target="#moreModal" class="more-btn" data-post-id="${postDetail.post.id }">
 																					<!-- 'data-'는 정해진 값, 'post-id'는 내가 정한 변수 -->
-									<i class="bi bi-three-dots"></i></a>
+									<i class="bi bi-three-dots"></i>
+								</a>
+								
 								</c:if>
 							</div>
 						</div>
@@ -77,10 +79,24 @@
 						
 						<!-- 좋아요 -->
 						<div class="p-2 d-flex mt-2">
-								<a href="#" class="like-btn" data-post-id="${postDetail.post.id }">
-										<!-- 좋아요를 여러개 만들어야하니까 class로 만듦, id로 만들면 하나밖에 안됨 -->
+							
+						<c:choose>
+						
+							<c:when test="${postDetail.like }">	<!-- boolean에서 getter의 isLike 규칙 때문에 is 빼고 그냥 like로 옴 -->
+								<a href="#" class="unlike-btn decoration-none" data-post-id="${postDetail.post.id }">
+									<span class="heart-size text-danger"><i class="bi bi-heart-fill"></i></span>
+								</a>
+							</c:when>
+							
+							<c:otherwise>
+								<a href="#" class="like-btn decoration-none" data-post-id="${postDetail.post.id }">
+									<!-- 좋아요를 여러개 만들어야하니까 class로 만듦, id로 만들면 하나밖에 안됨 -->
 									<span class="heart-size"> <i class="bi bi-heart" ></i> </span>
 								</a>
+							</c:otherwise>
+							
+						</c:choose>
+							
 							<div class="ml-2">좋아요 ${postDetail.likeCount }개 </div>
 						</div>
 						<!-- /좋아요 -->
@@ -89,7 +105,7 @@
 						<div class="p-2 d-flex">
 							<b class="mr-2">${postDetail.user.loginId }</b>  
 							${postDetail.post.content }
-									<!-- <div class="ml-2">점심 메뉴 추천해주세요</div>  -->
+									<!-- <div class="ml-2">점심 메뉴 추천해주세요 -->
 						</div>
 						<!-- /게시글 -->
 						
@@ -100,14 +116,13 @@
 							
 							<!-- 댓글 리스트 -->
 							<div class="mt-2">
-								<div class="mt-1 d-flex">
-									<b>victor</b> 
-									<div class="ml-2">샐러드 추천합니다</div>
-								</div>
-								<div class="mt-1 d-flex">
-									<b>maeve</b> 
-									<div class="ml-2">Fish and Chips ~!</div>
-								</div>
+								<c:forEach var="commentDetail" items="${postDetail.commentList }">
+														<!-- List는 items로 표기 -->
+									<div>
+										<b>${commentDetail.user.loginId }</b> 
+										<div class="ml-2">${commentDetail.comment.content }</div>
+									</div>
+								</c:forEach>
 							</div>
 							<!-- /댓글 리스트 -->
 							
@@ -217,7 +232,7 @@
 				$.ajax({
 					type:"post",
 					url:"/post/comment/create",
-					data:{"post":postId, "content":content},
+					data:{"postId":postId, "content":content},
 					success:function(data) {
 						if (data.result == "success") {
 							location.reload();
@@ -243,6 +258,7 @@
 				
 				e.preventDefault();		// <a>의 #은 페이지 이동이라서 맨 위로 링크가 올라감, 그것을 방지하기 위해 사용
 				
+				// data-post-id
 				let postId = $(this).data("post-id");
 				
 				$.ajax({
@@ -306,7 +322,7 @@
 			
 			
 			// 아이콘으로 파일 선택
-			$("#imageIcon").on("click", function() {
+			$("#imageIcon").on("click", function(e) {
 				// alert();
 				
 				// fileInput을 클릭한 효과를 만들어야한다
