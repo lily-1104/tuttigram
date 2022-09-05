@@ -17,6 +17,17 @@ header {
 }
 
 
+.heart-size {
+	font-size:18px;
+	text-decoration:none;
+}
+
+
+.decoration-none:hover {
+	text-decoration:none;
+}
+
+
 .search-box {
 	background-color: #eeeeee;
 }
