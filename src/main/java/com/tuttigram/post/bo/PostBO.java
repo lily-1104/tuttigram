@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.tuttigram.common.FileManagerService;
 import com.tuttigram.post.comment.bo.CommentBO;
+import com.tuttigram.post.comment.model.CommentDetail;
 import com.tuttigram.post.dao.PostDAO;
 import com.tuttigram.post.like.bo.LikeBO;
 import com.tuttigram.post.model.Post;
@@ -50,7 +51,6 @@ public class PostBO {
 			return -1;	// 1이 아닌 결과로 리턴해야함 (PostRestController에서 if(count == 1)이 아니면 "fail"로 리턴하기 때문에
 		}
 		
-		
 		return postDAO.insertPost(userId, content, imagePath); 	
 								// imagePath 대신 "" 적음 (파일 저장 코딩 안됐을 때 임시로 사용, 나중에는 지금처럼 imagePath로 수정!)  
 	
@@ -59,7 +59,7 @@ public class PostBO {
 	
 	
 	// 게시물 업로드
-	public List<PostDetail> getPostList () {
+	public List<PostDetail> getPostList(int loginUserId) {
 		
 		List<PostDetail> postDetailList = new ArrayList<>();
 		
@@ -74,12 +74,20 @@ public class PostBO {
 			// userBO를 통해서 userId와 일치하는 사용자 정보 조회 (userBO 호출)
 			User user = userBO.getUserById(userId);
 			int likeCount = likeBO.countLike(postId);
-					
+			
+			// post id를 대상으로 해당되는 댓글 들을 조회하는 기능 
+			List<CommentDetail> commentList = commentBO.getCommentListByPostId(postId);
+			
+			boolean isLike = likeBO.isLike(postId, loginUserId);
+			
 			// 게시글과 사용자 정보를 합치는 과정
 			PostDetail postDetail = new PostDetail();
 			postDetail.setPost(post);
 			postDetail.setUser(user);
 			postDetail.setLikeCount(likeCount);
+			postDetail.setCommentList(commentList);
+			postDetail.setLike(isLike);	
+				// boolean 형태라서 isLike 이지만 PostDetail에서 getter, setter 뚫어주면 is -> set으로 변경되는 규칙이 있음, 그래서 메소드는 isLike 대신 setLike로 생성됨	
 			
 			postDetailList.add(postDetail);
 		}
@@ -98,7 +106,7 @@ public class PostBO {
 		if(count == 1) {
 			
 		// 파일 삭제  => 파일 경로 알아오기 
-//		FileManagerService.removeFile(post.getImagePath());
+		FileManagerService.removeFile(post.getImagePath());
 		
 		// 댓글 삭제
 		commentBO.deleteComment(postId);
@@ -110,12 +118,6 @@ public class PostBO {
 	
 		return count;
 		
-		// 게시글 삭제
-//		return postDAO.deletePost(postId, userId);
-//		return 1;
-		
-	} // else {
-//		return 0;
-//	}
+	} 
 	
 }

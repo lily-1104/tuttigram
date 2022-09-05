@@ -36,22 +36,21 @@
 	
 		<!-- 게시물 업로드 -->
 		
-	<select id="selectPostList" parameterType="int"
-		resultType="com.tuttigram.post.model.Post">
+	<select id="selectPostList" resultType="com.tuttigram.post.model.Post">
 	
-	SELECT
-		`id`
-		, `userId`
-		, `content`
-		, `imagePath`
-		, `createdAt`
-		, `updatedAt`
-	 
-	FROM
-		`post`
-	
-	ORDER BY
-		`id` DESC
+		SELECT
+			`id`
+			, `userId`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		 
+		FROM
+			`post`
+		
+		ORDER BY
+			`id` DESC
 	
 	</select>
 	
@@ -62,19 +61,19 @@
 	<select id="selectPost" parameterType="int" 
 		resultType="com.tuttigram.post.model.Post">
 		
-	SELECT
-		`id`
-		, `userId`
-		, `content`
-		, `imagePath`
-		, `createdAt`
-		, `updatedAt`
-	 
-	FROM
-		`post`
-	
-	WHERE
-		`id` = #{postId}
+		SELECT
+			`id`
+			, `userId`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		 
+		FROM
+			`post`
+		
+		WHERE
+			`id` = #{postId}
 	
 	</select>
 	
