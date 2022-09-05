@@ -42,13 +42,13 @@
 							<button type="button" class="btn btn-primary ml-2" id="isDuplicateBtn">중복확인</button>
 						</div>
 						<div id="duplicateText" class="d-none"><small class="text-danger">중복된 ID 입니다</small></div>
-						<div id="possibleText" class="d-none"><small class="text-success">사용가능한 ID 입니다</small></div>
+						<div id="possibleText" class="d-none"><small class="text-success">사용 가능한 ID 입니다</small></div>
 						
 						<input type="password" class="form-control mt-3" id="passwordInput" placeholder="비밀번호">
-						<input type="Password" class="form-control mt-3" id="passwordConfirmInput" placeholder="비밀번호 확인">
+						<input type="password" class="form-control mt-3" id="passwordConfirmInput" placeholder="비밀번호 확인">
 						
-						<input type="name" class="form-control mt-3" id="nameInput" placeholder="이름">
-						<input type="email" class="form-control mt-3" id="emailInput" placeholder="이메일">
+						<input type="text" class="form-control mt-3" id="nameInput" placeholder="이름">
+						<input type="text" class="form-control mt-3" id="emailInput" placeholder="이메일">
 						
 						<button type="button" id="signUpBtn" class="btn btn-primary btn-block mt-4">회원가입</button>
 					</div>
@@ -63,7 +63,7 @@
 				</div>
 				
 				<div class="w-40 p-3 mt-3 d-flex justify-content-center border rounded">
-					<text class="text-secondary">계정이 있으신가요?</text>
+					<div class="text-secondary">계정이 있으신가요?</div>
 	                <a href="/user/signin/view" class="ml-3"><b>로그인</b></a>
 				</div>
 			</div>
@@ -157,7 +157,7 @@
 				}
 				
 				// 아이디 중복 여부 유효성 검사
-					// if (isDuplicateCheck == true) {
+					// if (isDuplicateId == true) {
 				if (isDuplicateId) {
 					alert("중복된 아이디입니다");
 					return;
