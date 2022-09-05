@@ -33,6 +33,29 @@
 	
 	
 	
+		<!-- post id를 대상으로 해당되는 댓글 들을 조회하는 기능  -->
+		
+	<select id="selectCommentListByPostId" parameterType="int"
+		resultType="com.tuttigram.post.comment.model.Comment">
+		
+		SELECT
+			`id`
+			, `postId`
+			, `userId`
+			, `content`
+			, `createdAt`
+			, `updatedAt`
+		
+		FROM
+			`comment`
+		
+		WHERE
+			`postId` = #{postId}
+	
+	</select>
+	
+	
+	
 		<!-- 해당하는 postId의 모든 댓글 삭제 -->
 	
 	<delete id="deleteComment" parameterType="int">
@@ -44,8 +67,6 @@
 			`postId` = #{postId}
 	
 	</delete>
-	
-
 
 
 </mapper>
