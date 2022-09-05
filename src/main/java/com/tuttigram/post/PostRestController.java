@@ -61,16 +61,16 @@ public class PostRestController {
 		HttpSession session = request.getSession();
 		int userId = (Integer) session.getAttribute("userId");
 		
-//		int count = postBO.deletePost(postId);
+		int count = postBO.deletePost(postId, userId);
 		
 		Map<String, String> map = new HashMap<>();
 		
-//		if(count == 1) {
-//			map.put("result", "success");
-//			
-//		} else {
-//			map.put("result", "fail");
-//		}
+		if(count == 1) {
+			map.put("result", "success");
+			
+		} else {
+			map.put("result", "fail");
+		}
 		
 		return map;
 	}
