@@ -36,7 +36,7 @@ public class CommentBO {
 		
 		List<CommentDetail> commentDetailList = new ArrayList<>();
 		
-		for(Comment commment : commentList) {
+		for(Comment comment : commentList) {
 			
 			int userId = comment.getUserId();
 			User user = userBO.getUserById(userId);
