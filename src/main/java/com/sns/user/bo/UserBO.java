@@ -15,11 +15,12 @@ public class UserBO {
 	
 	
 	// 로그인 아이디 중복 확인 API
-	// input :  / output : 
-	
-	
-	
-	
+	public UserEntity getUserEntityByLoginId(String loginId) {
+		
+		return userRepository.findByLoginId(loginId);
+		
+	}
+
 	
 	
 	// 회원가입
@@ -40,7 +41,11 @@ public class UserBO {
 	
 	
 	
+	// 로그인 API
+	public UserEntity getUserEntityByLoginIdPassword(String loginId, String password) {
+		
+		return userRepository.findByLoginIdAndPassword(loginId, password);
+	}
 	
 	
-
 }
