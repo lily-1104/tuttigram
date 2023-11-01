@@ -90,7 +90,7 @@
 					, success:function(data) {
 						
 						// 중복
-						if (data.isDuplicated) {
+						if (data.isDuplicatedId) {
 							
 							$('#idCheckDuplicated').removeClass('d-none');
 							
@@ -119,10 +119,10 @@
 				
 				// validation
 				let loginId = $('input[name=loginId]').val().trim();
-				let password = $('#password').val();
-				let confirmPassword = $('#confirmPassword').val();
-				let name = $('#name').val().trim();
-				let email = $('#email').val().trim();
+				let password = $('input[name=password]').val();
+				let confirmPassword = $('input[name=confirmPassword]').val();
+				let name = $('input[name=name]').val().trim();
+				let email = $('input[name=email]').val().trim();
 				
 				if (!loginId) {
 					alert("아이디를 입력하세요");
@@ -134,8 +134,8 @@
 					return false;
 				}
 				
-				if (password != !confirmPassword) {
-					alert("비밀번호를 입력하세요");
+				if (password != confirmPassword) {
+					alert("비밀번호가 일치하지 않습니다");
 					return false;
 				}
 				
@@ -157,24 +157,29 @@
 					return false;
 				}
 				
+				let url = $(this).attr('action');
+				console.log(url);
+				
+				let params = $(this).serialize();
+				console.log(params);
+				
+				$.post(url, params)
+				.done(function(data) {
+					
+					if (data.code == 200) {
+						
+						alert("가입을 환영합니다. 로그인 해주세요");
+						location.href = "/user/sign-in-view";
+						
+					} else {
+						
+						alert(data.errorMessage);
+						
+					}
+					
+				});
+				
 			});
-			
-			
-			
 		});
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	</script>
