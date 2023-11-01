@@ -4,7 +4,9 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sns.post.mapper.PostMapper">
-
+	
+	
+	<!-- TestController -->
 	<select id="selectPostList" resultType="map">
 	
 		SELECT
@@ -13,5 +15,10 @@
 			`post`
 	
 	</select>
+	
+	
+	
+	
+	
 	
 </mapper>
