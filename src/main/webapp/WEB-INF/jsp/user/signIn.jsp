@@ -41,7 +41,7 @@
 		$(document).ready(function() {
 			
 			// 로그인
-			$('#signInBtn').on('submit', function(e) {
+			$('#loginForm').on('submit', function(e) {
 				
 				e.preventDefault();
 				
@@ -50,16 +50,16 @@
 				
 				// validation
 				let loginId = $('#loginId').val().trim();
-				let password = $('#password').val().trim();
+				let password = $('#password').val();
 				
 				if (!loginId) {
 					alert("아이디를 입력하세요");
-					return false;
+					return;
 				}
 				
 				if (!password) {
 					alert("비밀번호를 입력하세요");
-					return false;
+					return;
 				}
 				
 				
@@ -76,7 +76,7 @@
 					if(data.code == 200) {
 						
 						// 성공
-						location.href = "/sns/timeline-view";
+						location.href = "/timeline/timeline-view";
 						
 					} else {
 						
