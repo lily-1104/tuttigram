@@ -9,15 +9,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sns.post.bo.PostBO;
-import com.sns.post.entity.PostEntity;
+import com.sns.timeline.bo.TimelineBO;
+import com.sns.timeline.domain.CardView;
 
 @RequestMapping("/timeline")
 @Controller
 public class TimelineController {
 	
+//	@Autowired
+//	private PostBO postBO;
 	
 	@Autowired
-	private PostBO postBO;
+	private TimelineBO timelineBO;
 	
 	
 	// 타임라인
@@ -25,9 +28,13 @@ public class TimelineController {
 	@GetMapping("/timeline-view")
 	public String timelineView(Model model) {
 		
-		List<PostEntity> postList = postBO.getPostList();
+		List<CardView> careViewList = timelineBO.generateCardViewList();
+				
+		model.addAttribute("cardList", careViewList);
 		
-		model.addAttribute("postList", postList);
+//		List<PostEntity> postList = postBO.getPostList();
+		
+//		model.addAttribute("postList", postList);
 		model.addAttribute("viewName", "timeline/timeline");
 		
 		return "template/layout";

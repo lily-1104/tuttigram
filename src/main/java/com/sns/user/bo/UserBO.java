@@ -14,6 +14,15 @@ public class UserBO {
 	private UserRepository userRepository;
 	
 	
+	// 타임라인 게시글 카드 (TimelineBO 연결)
+	public UserEntity getUserEntityById(int userId) {
+		
+		return userRepository.findById(userId).orElse(null);
+		
+	}
+	
+	
+	
 	// 로그인 아이디 중복 확인 API
 	public UserEntity getUserEntityByLoginId(String loginId) {
 		
