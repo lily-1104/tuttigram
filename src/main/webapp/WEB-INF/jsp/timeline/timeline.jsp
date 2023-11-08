@@ -57,10 +57,22 @@
 					
 					<%-- 좋아요 --%>
 					<div class="card-like m-3">
+					
+						<%-- 빈 하트가 나오는 경우 : 1) 비로그인일 때, 2) 좋아요를 누르지 않았고 로그인 상태일 때 --%>
+						<c:if test="${card.filledLike eq false }">
+						<a href="#" class="like-btn" data-post-id="${card.post.id }">
+							<img src="https://www.iconninja.com/files/214/518/441/heart-icon.png" width="18" height="18" alt="empty heart">
+						</a>
+						</c:if>
+						
+						<%-- 채워진 하트 : 로그인 상태 && 좋아요 눌렀을 때 --%>
+						<c:if test="${card.filledLike eq true }">
 						<a href="#" class="like-btn" data-post-id="${card.post.id }">
 							<img src="https://www.iconninja.com/files/214/518/441/heart-icon.png" width="18" height="18" alt="filled heart">
 						</a>
-						좋아요 11개
+						</c:if>
+						
+						좋아요 ${card.likeCount }개
 					</div>
 					
 					<%-- 글 --%>

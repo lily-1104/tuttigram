@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sns.like.mapper.LikeMapper">
+	
+	<!--  
+		좋아요 카운트 
+	<select id="selectLikeCountByPostId" parameterType="int" resultType="int">
+	
+		SELECT
+			COUNT(*)
+		
+		FROM
+			`like`
+		
+		WHERE
+			`postId` = #{postId}
+	
+	</select>
+	-->
+	
+	
+	<!-- likeCount 한개로 합치기 -->
+	<select id="selectLikeCountByPostIdOrUserId" parameterType="map" resultType="int">
+	
+		SELECT
+			COUNT(*)
+		
+		FROM
+			`like`
+		
+		WHERE
+			`postId` = #{postId}
+			
+			<if test="userId != null">
+			AND `userId` = #{userId}
+			</if>
+	
+	</select>
+	
+	
+	
+	<!-- 좋아요 추가?? -->
+	<insert id="">
+	
+	
+	</insert>
+	
+	
+	
+	
+	
+</mapper>
