@@ -43,7 +43,7 @@ public class PostEntity {
 	private ZonedDateTime createdAt;
 	
 	@UpdateTimestamp
-	@Column(name = "updatedAt", updatable = false)
+	@Column(name = "updatedAt")
 	private ZonedDateTime updatedAt;
 	
 	
