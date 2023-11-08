@@ -93,7 +93,7 @@ public class UserRestController {
 	public Map<String, Object> signIn(
 			@RequestParam("loginId") String loginId,
 			@RequestParam("password") String password,
-			HttpServletRequest request) {
+			HttpSession session) {
 		
 		// 비밀번호 hashing
 		String hashedPassword = EncryptUtils.md5(password);
@@ -107,7 +107,6 @@ public class UserRestController {
 		if (user != null) {
 			
 			// 로그인 처리
-			HttpSession session = request.getSession();
 			session.setAttribute("userId", user.getId());
 			session.setAttribute("userName", user.getName());
 			session.setAttribute("userLoginId", user.getLoginId());
