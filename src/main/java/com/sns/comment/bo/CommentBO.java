@@ -25,7 +25,7 @@ public class CommentBO {
 	
 	
 	// 댓글 쓰기
-	public void addCommnet(int postId, int userId, String content) {
+	public void addComment(int postId, int userId, String content) {
 		
 		commentMapper.insertComment(postId, userId, content);
 		
@@ -37,9 +37,10 @@ public class CommentBO {
 	// input : 글 번호 / output : List<CommentView>
 	public List<CommentView> generateCommentViewListByPostId(int postId) {
 		
-		List<CommentView> commentViewList = new ArrayList<>();
+		List<CommentView> commentViewList = new ArrayList<>();	  // []
 		
-		List<Comment> commentList = commentMapper.selectCommnetListByPostId(postId);
+		// 글에 해당하는 댓글들 목록 가져오기 List<Comment>
+		List<Comment> commentList = commentMapper.selectCommentListByPostId(postId);
 				
 		// 반복문 순회
 		// List<Comment> => List<CommentView>
@@ -71,7 +72,6 @@ public class CommentBO {
 		
 		commentMapper.deleteCommentById(id);
 	}
-	
 	
 
 }

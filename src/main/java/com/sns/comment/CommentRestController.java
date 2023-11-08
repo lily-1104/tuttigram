@@ -48,7 +48,7 @@ public class CommentRestController {
 			return result;
 		}
 		
-		commentBO.addCommnet(postId, postId, content);
+		commentBO.addComment(postId, postId, content);
 		
 		result.put("code", 200);
 		result.put("result", "성공");

@@ -19,7 +19,7 @@ public interface CommentMapper {
 	
 	
 	// 게시글 댓글 조회
-	public List<Comment> selectCommnetListByPostId(int postId);
+	public List<Comment> selectCommentListByPostId(int postId);
 	
 	
 	
