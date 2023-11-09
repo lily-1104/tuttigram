@@ -22,9 +22,8 @@ public interface LikeMapper {
 	
 	
 	
-	public void insertLike() {
-		
-		
-	}
+	public void insertLike(
+			@Param("postId") int postId,
+			@Param("userId") int userId);
 
 }
