@@ -11,5 +11,11 @@ public interface PostMapper {
 	
 	// TestController
 	public List<Map<String, Object>> selectPostList();
+	
+	
+	
+	// 글 삭제 API
+	public void deletePostByPostIdUserId
+	
 
 }

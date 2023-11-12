@@ -45,9 +45,12 @@
 					<div class="p-2 d-flex justify-content-between">
 						<span class="font-weight-bold">${card.user.loginId }</span>
 						
-						<a href="#" class="more-btn">
+						<%-- 더보기 (내가 쓴 글 일 때만 노출 - 삭제 or 수정) --%>
+						<c:if test="${userId eq card.user.id }">
+						<a href="#" class="more-btn" data-toggle="modal" data-target="modal" data-post-id="${card.post.id }">
 							<img src="https://www.iconninja.com/files/860/824/939/more-icon.png" width="30">
 						</a>
+						</c:if>
 					</div>	
 					
 					<%-- 카드 이미지 --%>
@@ -117,6 +120,25 @@
 				
 			</div> <%--// 타임라인 영역 끝  --%>
 		</div> <%--// contents-box 끝  --%>
+	</div>
+	
+	
+	<%-- 수정, 삭제 modal 창 --%>
+	<div class="modal fade" id="modal">
+	
+	  <div class="modal-dialog modal-dialog-centered modal-sm">	
+	  					<%--  modal-dialog-centered : modal창 위치 수직 기준 가운데 정렬 / modal-sm : modal 창 작게 (small) --%>
+	    <div class="modal-content text-center">
+	    	<div class="py-3 border-bottom">
+	    		<a href="#" id="deletePostLink">삭제하기</a>
+	    	</div>
+	    	
+	    	<div class="py-3">
+	    		<a href="#" data-dismiss="modal">취소하기</a>	<%-- data-dismiss="modal" : 취소하기 버튼 누르면 모달창 꺼짐 --%>
+	    	</div>
+	    </div>
+	    
+	  </div>
 	</div>
 	
 	
@@ -355,6 +377,42 @@
 					}
 				});
 			});
+			
+			
+			// 글 삭제 (... 더보기 버튼 클릭 했을 때 모달 띄우기 => 모달에 글번호 세팅)
+			$(".more-btn").on("click", function(e) {
+				
+				e.preventDefault();		// a 태그 맨 위로 올라가는 현상 방지
+				
+				let postId = $(this).data("post-id");	// ... 버튼에 넣어둔 글 번호 getting
+				// alert(postId);
+				
+				// 1개인 모달 태그에 재활용 => data-post-id를 심어줌
+				$("#modal").data("post-id", postId);	// 모달 태그에 setting
+				
+			});
+			
+			
+			// 모달 안에 있는 삭제하기 클릭 => 진짜 삭제
+			$("#modal #deletePostLink").on("click", function(e) {	// #modal #deletePostLink : id="modal" 안에 id="deletePostLink"
+				
+				e.preventDefault();
+			
+				let postId = $("#modal").data("post-id");	// getting
+				// alert(postId);
+				
+				
+				// ajax 글 삭제 요청
+				
+				
+				
+				
+				
+			});
+			
+			
+			
+			
 			
 		});
 	
