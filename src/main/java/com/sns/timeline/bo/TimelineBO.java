@@ -33,7 +33,7 @@ public class TimelineBO {
 	
 	// 타임라인 게시글 카드
 	// input : userId / output : List<CardView>
-	public List<CardView> generateCardViewList() {
+	public List<CardView> generateCardViewList(Integer userId) {
 		
 		List<CardView> cardViewList = new ArrayList<>();	// [] 비어있음
 		
